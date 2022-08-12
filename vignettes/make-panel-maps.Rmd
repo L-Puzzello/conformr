@@ -90,28 +90,18 @@ library(strayr)
 
 Often when creating panel datasets, the required transformations might different between observational units. For example, <!--# TODO: add example with different map by group : e.g. isiccomb in INDSTAT4-->
 
+-- Background ISIC codes
+
+AUS COMB1- x111, x222
+
+USA COMB1- x333, x444
+
+Needed to bring COMB 1 to ISIC to then match to destination\_ code (see appendix in volatility paper)
+
 ## Panel Maps are Non-Invertible
 
 Panel maps are not usually invertible. More specifically, a valid transformation map from `code_in` to `code_out` will not, in general, have the same weights as a map from `code_out` to `code_in`. One case where the panel maps are invertible are when the transformation from one classification to another involves only one-to-one mappings.
 
 However, we can always extract the bi-directional code correspondence from an existing `panel_map` by dropping the weights column and filtering for distinct correspondences. We can then construct a new `panel_map` in the opposite direction with appropriate weights.
-
-## TBC // From existing scripts (e.g STATA) //
-
-In general, not possible because the panel map weights are lost at aggregation. Maybe possible from an intermediate output.
-
-<!--# TODO: Example of extracting panel map from for loops – requires aggregation happens separately to splitting -->
-
-``` r
-# ---- make carbon paper for code/value_in ----
-
-# scrub value_in to be 1
-input_data$value_in <- 1
-
-# ---- pass through to script ----
-
-
-# ---- intermediate table **might** be panel map ----
-```
 
 ## 
