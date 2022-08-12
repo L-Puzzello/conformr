@@ -64,6 +64,12 @@ Notice that we kept only the unique combinations of HS1 & NAICS using `dplyr::di
 
 <!--# TODO: insert motivating example (e.g. BEL/LUX) -->
 
+-Ex-post additional data (BLX vs. BEL and LUX)
+
+-Population shares
+
+-Probabilistic weight from text analysis
+
 In simple cases: 1. Generate equal weight map 2. manually edit cell values using assignment e.g. equal[3, 7] \<- 0.3 OR 2. replace using coalesce (more tractible) uneven_weights \<- tribble(\~code_in, \~weight_new) left_join(pm, uneven_weights) %\>% coalesce(weight_new, weight)
 
 <!--# TODO: Example of population weighted splits -->
