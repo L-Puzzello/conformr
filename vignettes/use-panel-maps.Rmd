@@ -39,7 +39,7 @@ First up, you should check your panel map covers all codes present in your datas
 
 <!-- CH: should the coverage step generate placeholder instruction for missing categories?-->
 
-```r
+``` r
 ## TODO: implement check_coverage() with these tests:
 dropA_pm <- good_pm[good_pm$std_A != "x1111",] ## remove code instruction
 ## check_cd_coverage ----
@@ -47,7 +47,6 @@ test_that("incomplete `code_dict` raises check_cd_coverage() warning", {
   expect_warning(check_cd_coverage(data = data_in, code_dict = dropA_dict, code_in = "std_A"))
 })
 ```
-
 
 Next, consider what you want to do with missing values in your data series. For now, we will convert them all to zeroes.
 
@@ -93,7 +92,6 @@ CH: add note on coverage
 // have use_panel_map() warn if any code/value in rows couldn't be matched
 -->
 ```
-
 ```{r use_panel_map}
 code_in <- sym("std_A")
 
@@ -116,6 +114,7 @@ data_out <-
                 from_code = std_A, to_code = std_B,
                 weights = split_A, .suffix = "_out")
 ```
+
 ## Multi-Variable Transformations
 
 What if you want to use the same panel map on multiple numeric variables?
@@ -137,6 +136,7 @@ data %>%
 ```
 
 Again, `use_panel_map()` handles the pivoting for you:
+
 ```{r}
 use_panel_map(map = toy_pm,
               data = group_by(data_in, country), 
@@ -145,14 +145,13 @@ use_panel_map(map = toy_pm,
               weights = split_A, .suffix = "_out")
 ```
 
-
 ## Grouped Transformations
 
 <!--# TODO: Example of how to use multi-column key instead of "code_in"; e.g. unique panel map for each country or year? -->
 
 <!--# CH: related to grouped panel_maps? -->
 
-  # http://svmiller.com/blog/2021/02/gank-world-bank-data-with-wdi-in-r/
+\# <http://svmiller.com/blog/2021/02/gank-world-bank-data-with-wdi-in-r/>
 
 ```{r grouped-transformation}
 # write sample data
@@ -168,12 +167,12 @@ tribble(~year, ~country_in, ~country_out,
 
 ## Multi-step Transformations
 
-Example: ISIC4 -> ISIC3 -> ISIC2
--   be careful with handling of column names..
+Example: ISIC4 -\> ISIC3 -\> ISIC2 - be careful with handling of column names..
 
 <!--# TODO: write motivation/example -->
 
 <!--# TODO: include demo code -->
+
 ```{r multi-step}
 # first conversion step
 
