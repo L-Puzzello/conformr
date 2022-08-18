@@ -26,14 +26,14 @@ library(dplyr)
 
 -   Describe the two cases the package can handle:
 
-    1.  You have access to data as follow: 
-    
+    1.  You have access to data as follow:
+
     ```{r}
 
-    
-    
-# Example of data available 
-tribble(~Source_Code, ~Value,
+
+
+    # Example of data available 
+    tribble(~Source_Code, ~Value,
                                 "x1111", 100,
                                 "x2222", 30,
                                 "x3333", 20,
@@ -43,4 +43,26 @@ tribble(~Source_Code, ~Value,
                                 "x7777", 15
                                 )
 
+    ```
+
+    and also to a correspondence between the classification of the Source_code and that of a Destination_code, as shown below:
+
+```{r}
+   
+tribble(~Source_Code, ~ Destination_Code,
+                                "x1111", "A1",
+                                "x2222", "B2",
+                                "x3333", "B2",
+                                "x4444", "C3",
+                                "x4444", "C4",
+                                "x4444", "C5",
+                                "x5555", "D6",
+                                "x5555", "D7",
+                                "x6666", "D6",
+                                "x6666", "D7",
+                                "x7777", "D6"
+                                )
+
 ```
+
+Conformr makes a valid panel map for you by creating weights between (0, 1] depending on whether 1 or many codes in the Destination_Code matches to one code in the Source_code. In the 1-1 case the assigned weight is 1, in the case in which m codes in Destination_Code match to 1 code in the Source_code the assigned weight is 1/m.
