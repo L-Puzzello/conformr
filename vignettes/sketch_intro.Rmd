@@ -65,4 +65,22 @@ tribble(~Source_Code, ~ Destination_Code,
 
 ```
 
-Conformr makes a valid panel map for you by creating weights between (0, 1] depending on whether 1 or many codes in the Destination_Code matches to one code in the Source_code. In the 1-1 case the assigned weight is 1, in the case in which m codes in Destination_Code match to 1 code in the Source_code the assigned weight is 1/m.
+Conformr makes a valid panel map for you by creating weights between (0, 1] depending on whether 1 code in the Source_Code classification matches to one or more codes in the Destination_code classification. In the 1-1 case the assigned weight is 1. In the case in which 1 code in the Source_code classification matches to m codes in the Destination_Code classification, the assigned weight is 1/m.
+
+```{r}
+   
+tribble(~Source_Code, ~ Destination_Code, ~Weight,
+                                "x1111", "A1", 1,
+                                "x2222", "B2", 1,
+                                "x3333", "B2", 1,
+                                "x4444", "C3", 1/3,
+                                "x4444", "C4", 1/3,
+                                "x4444", "C5", 1/3,
+                                "x5555", "D6", 1/2,
+                                "x5555", "D7", 1/2,
+                                "x6666", "D6", 1/2,
+                                "x6666", "D7", 1/2,
+                                "x7777", "D6", 1/2
+                                )
+
+```
