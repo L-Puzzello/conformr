@@ -45,7 +45,7 @@ library(dplyr)
 
     ```
 
-    and also to a correspondence between the classification of the Source_code and that of a Destination_code, as shown below:
+    and also to a correspondence between the classification of the **Source_Code** and that of a **Destination_Code**, as shown below:
 
 ```{r}
    
@@ -65,7 +65,7 @@ tribble(~Source_Code, ~ Destination_Code,
 
 ```
 
-Conformr makes a valid panel map for you by creating weights between (0, 1] depending on whether 1 code in the Source_Code classification matches to one or more codes in the Destination_code classification. In the 1-1 case the assigned weight is 1. In the case in which 1 code in the Source_code classification matches to m codes in the Destination_Code classification, the assigned weight is 1/m.
+Conformr makes a valid panel map for you by creating weights between (0, 1] depending on whether 1 code in the Source_Code classification matches to one or more codes in the Destination_code classification. In the 1-1 case the assigned weight is 1. In the case in which 1 code in the Source_code classification matches to *m* codes in the Destination_Code classification, the assigned weight is 1/*m*.
 
 ```{r}
    
