@@ -1,0 +1,46 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE}
+library(conformr)
+library(magrittr)
+library(dplyr)
+```
+
+# Introduction
+
+-   Define what is the problem the package addresses
+
+-   Describe the two cases the package can handle:
+
+    1.  You have access to data as follow: 
+    
+    ```{r}
+
+    
+    
+# Example of data available 
+tribble(~Source_Code, ~Value,
+                                "x1111", 100,
+                                "x2222", 30,
+                                "x3333", 20,
+                                "x4444", 80,
+                                "x5555", 30,
+                                "x6666", 40,
+                                "x7777", 15
+                                )
+
+```
