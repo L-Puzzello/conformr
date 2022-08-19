@@ -33,7 +33,8 @@ library(dplyr)
 
 
     # Example of data available 
-    tribble(~Source_Code, ~Value,
+    df_data_in <-
+    dplyr::tribble(~Source_Code, ~Value,
                                 "x1111", 100,
                                 "x2222", 30,
                                 "x3333", 20,

@@ -162,7 +162,7 @@ cake_pm <- make_panel_map_equal(
   .weights_to = "expected_split")
 ```
 
-From the code dictionary, we would expect that each plate gets 1/3rd of the value associated with `cake`.
+From the code dictionary (`code_dict`), we would expect that each plate gets 1/3rd of the value associated with `cake`.
 
 ```{r, cake-expected-split, echo=FALSE}
 cake_pm
