@@ -33,7 +33,7 @@ library(dplyr)
 
 
     # Example of data available 
-    df_data_in <- dplyr::tribble(~Source_Code, ~Value,
+    df_data_in <- dplyr::tribble(~Source_Code, ~Value_in,
                                 "x1111", 100,
                                 "x2222", 30,
                                 "x3333", 20,
@@ -82,11 +82,11 @@ df_weights <- dplyr:: tribble(~Source_Code, ~ Destination_Code, ~ Match_Type, ~W
 df_weights
 ```
 
-An important conceptual insight that follows from df_weights is that the two possible types of matches at the observation level (*1-match-1*, *1-match-m*) might lead to four different mapping cases: *1 to 1*, when 1 code in Source_code maps to 1 code in Destination_Code; *1 to many*, when 1 code in Source_code maps to many codes in Destination_Code; *many to 1*, when many codes in Source_code maps to 1 code in Destination_Code; and *many to many*, when 1 code in Source_code maps to 1 code in Destination_Code. This mapping is typically described in the correlation tables of published concordances and what practitioners often refer to describing the concordance. [ADD Sankey Visualization here?]
+An important conceptual insight that follows from df_weights is that the two possible types of matches at the observation level (*1-match-1*, *1-match-m*) might lead to four different mapping cases: *1 to 1*, when 1 code in Source_code maps to 1 code in Destination_Code; *1 to many*, when 1 code in Source_Code maps to many codes in Destination_Code; *many to 1*, when many codes in Source_Code maps to 1 code in Destination_Code; and *many to many*, when many codes in Source_Code map to many codes in Destination_Code. This mapping is typically described in the correlation tables of published concordances and what practitioners often refer to describing concordances. [ADD Sankey Visualization here?]
 
 ```{r}
    
-df_weights <- dplyr:: tribble(~Source_Code, ~ Destination_Code, ~ Match_Type, ~Weight, ~ Mapping_Type,
+df_map <- dplyr:: tribble(~Source_Code, ~ Destination_Code, ~ Match_Type, ~Weight, ~ Mapping_Type,
                                 "x1111", "A1", "1-match-1", 1, "1 to 1",
                                 "x2222", "B2", "1-match-2", 1/2, "1 to many",
                                 "x2222", "B3", "1-match-2", 1/2,  "1 to many",
@@ -97,5 +97,15 @@ df_weights <- dplyr:: tribble(~Source_Code, ~ Destination_Code, ~ Match_Type, ~W
                                 "x6666", "D6", "1-match-2", 1/2, "many to many",
                                 "x6666", "D7", "1-match-2", 1/2, "many to many",
                                 "x7777", "D6", "1-match-1", 1 , "many to many"                             )
-df_weights
+df_map
 ```
+
+Once the panel map is created, conformr applies it to df_data_in to get a **Value_out** for each Destination_code.
+
+-merge df_map and df_data_in
+
+-generated weighted value
+
+-aggregate weighted vale at the destination code
+
+-drop duplicates--\>data out
