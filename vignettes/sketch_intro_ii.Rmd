@@ -1,0 +1,112 @@
+---
+title: "sketch_intro_ii"
+output: html_document
+date: "2022-10-18"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE}
+library(conformr)
+library(magrittr)
+library(dplyr)
+```
+
+# Introduction
+
+-   Define what is the problem the package addresses
+
+-   Describe the two cases the package can handle:
+
+    1.  You have access to Source Data (`df_data_in`) as follows:
+
+    ```{r}
+
+
+
+    # Example of data available 
+    df_data_in <- dplyr::tribble(~source_code, ~value_in,
+                                "x1111", 100,
+                                "x2222", 30,
+                                "x3333", 20,
+                                "x4444", 80,
+                                "x5555", 30,
+                                "x6666", 40,
+                                "x7777", 15
+                                )
+    df_data_in
+    ```
+
+    and also to a concordance between the Source Classification (`source_code`) and the Target Classification ( `destination_code`), as shown below:
+
+```{r}
+   
+df_concordance <- dplyr:: tribble(~source_code, ~ destination_code,
+                                "x1111", "A1",
+                                "x2222", "B2",
+                                "x2222", "B3",
+                                "x3333", "C5",
+                                "x4444", "C5",
+                                "x5555", "D6",
+                                "x5555", "D7",
+                                "x6666", "D6",
+                                "x6666", "D7",
+                                "x7777", "D6"
+                                )
+df_concordance
+```
+
+Conformr **can** make a valid Panel Map (`df_map`) for you by creating, for each observation, weights between (0, 1] depending on whether 1 code in the `source_code` classification matches to one or more codes in the `destination_code` classification. In the *1- match-1* case, the assigned weight is 1. In the case in which 1 code in the `source_code` classification matches to *m* codes in the `destination_code` classification (*1-match-m*), the assigned weight is 1/*m,* as shown in data frame `df_weights`.
+
+```{r}
+df_weights <- left_join(df_data_in, df_concordance, by="source_code")
+df_weights <- df_weights %>%
+  group_by(source_code) %>%
+  mutate(n_distinct_dc_in_sc = n_distinct(destination_code))%>%
+mutate(weight = 1/n_distinct_dc_in_sc)
+df_weights
+```
+
+```{r}
+df_map <- df_weights[,c(1,3,5)]
+df_map
+```
+
+An important conceptual insight that follows from data frame `df_weights` is that the two possible types of matches at the observation level (*1-match-1*, *1-match-m*) might lead to four different mapping cases: *1 to 1*, when 1 code in `source_code` maps to 1 code in `destination_code`; *1 to many*, when 1 code in `source_code` maps to many codes in `destination_code`; *many to 1*, when many codes in `source_code` map to 1 code in `destination_code`; and *many to many*, when many codes in `source_code` map to many codes in `destination_code`. This mapping is typically described in the correlation tables of published concordances and what practitioners often refer to describing concordances. [ADD Sankey Visualization here]
+
+Once the panel map `df_map` is created, conformr applies it to `df_data_in` to get a `value_out` for each `destination_code`. The underlying process is best described in four steps:
+
+1.  Merge data frames `df_data_in` and `df_map` by `source_code`
+
+```{r}
+df_process <-left_join(df_data_in, df_map, by="source_code")
+df_process
+
+```
+
+2.  Generate `weighted_value` by multiplying the `weight` by `value_in`
+
+```{r}
+df_s2 <- mutate(df_process, weighted_value=weight*value_in)
+df_s2
+```
+
+3.  Aggregate `weighted_value` by `destination_code` in `value_out`
+
+```{r}
+df_s3 <- df_s2 %>%
+  group_by(destination_code)%>%
+  mutate(value_out=sum(weighted_value))%>%
+distinct(destination_code, value_out)
+df_s3
+```
+
+Conformr implements a number of checks:
+
+1.  sum of weight by source_code =1
+2.  total value_in = total value_out
