@@ -109,9 +109,11 @@ df_s2
 
 ```{r}
 df_output <- df_s2 %>%
-  group_by(target_code)%>%
-  mutate(value_out=sum(weighted_value))%>%
-distinct(target_code, value_out)
+  group_by(target_code) %>%
+  summarise(value_out = sum(weighted_value))
+  # mutate(value_out=sum(weighted_value)) %>%
+  # distinct(target_code, value_out)
+
 df_output
 ```
 
